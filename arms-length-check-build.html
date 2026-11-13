@@ -260,9 +260,9 @@
   </header>
 
   <div class="metrics m3 reveal">
-    <div class="metric"><div class="num">56</div><div class="lbl">Logged product decisions, each with its reason and evidence</div></div>
-    <div class="metric"><div class="num">59</div><div class="lbl">Frozen test pairs from the data tests, reused as the regression suite</div></div>
-    <div class="metric"><div class="num">150<small>+</small></div><div class="lbl">Unit tests passing in the backend build</div></div>
+    <div class="metric"><div class="num">29<small>/29</small></div><div class="lbl">Known shared papers found in the regression run on the 59 frozen test pairs</div></div>
+    <div class="metric"><div class="num">0<small>/30</small></div><div class="lbl">Conflicts wrongly raised on same-name and unrelated reviewers</div></div>
+    <div class="metric"><div class="num">197</div><div class="lbl">Unit tests passing; 58 product decisions logged with reasons</div></div>
   </div>
 
   <section class="section reveal">
@@ -288,7 +288,7 @@
       <div class="stage"><div class="n">2</div><div><div class="st">Decision</div><div class="sd">A shared paper counts as a Conflict only when its author is the confirmed reviewer. A match on name alone becomes Potential, with a "check it's this person" prompt.</div></div></div>
       <div class="stage"><div class="n">3</div><div><div class="st">Acceptance criterion</div><div class="sd">"Given a confirmed reviewer who shares a name with a real co-author, the result is never Conflict."</div></div></div>
       <div class="stage"><div class="n">4</div><div><div class="st">Build</div><div class="sd">Rules are pure functions with no network calls, and every threshold lives in one config file, so the rule can be tested in isolation.</div></div></div>
-      <div class="stage"><div class="n">5</div><div><div class="st">Test</div><div class="sd">The regression run passes only with zero Conflicts on same-name and unrelated reviewers, and at least 85% of known shared papers found.</div></div></div>
+      <div class="stage"><div class="n">5</div><div><div class="st">Test</div><div class="sd">The regression run passes only with zero Conflicts on same-name and unrelated reviewers, and at least 85% of known shared papers found. Latest run: 29 of 29 shared papers found, 0 of 30 wrong Conflicts. Five same-name reviewers came out Potential with a "check it's this person" prompt, which the rule allows.</div></div></div>
     </div>
     <p class="body" style="margin-top:18px"><strong>A second, shorter trace.</strong> Reviewing the prototype, I saw that results appeared instantly, hiding the 4–5 data lookups each reviewer really needs. So checks now start in the background as each person is confirmed, with a target of 15 names within 20 seconds of the last confirmation, and test sessions log waiting time separately from the chair's own time.</p>
   </section>
@@ -321,6 +321,7 @@
       <li style="margin-bottom:8px">Put the same-name test case into the <b>first</b> data test, not the third.</li>
       <li style="margin-bottom:8px">Size the human step (two in three names) before designing around it.</li>
       <li>Decide where each layer is built (prototype tool vs code) before writing build prompts, not after.</li>
+      <li style="margin-top:8px">Test institution rules against umbrella records early: a university system and a research funder both produced false matches before the rules were tightened.</li>
     </ul>
   </section>
 
